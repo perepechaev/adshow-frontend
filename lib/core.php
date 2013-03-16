@@ -295,11 +295,31 @@ class Image
     }
 }
 
+class Action
+{
+    private $name;
+
+    public function __construct($name){
+        $this->name = preg_replace('/[^\d\w\/]/', '', $name);
+    }
+
+    public function run(){
+        $result = 0;
+        if (file_exists('app/' . $this->name. ".php")){
+            $result = include 'app/' . $this->name. ".php";
+        }
+        return new Template($this->name, $result);
+    }
+}
+
 class Template
 {
-    private $content;
-    public function __construct($name){
-        $name = preg_replace('/[^\d\w]/', '', $name);
+    private $content = '';
+    public function __construct($name, $data = array()){
+        $name = preg_replace('/[^\d\w\/]/', '', $name);
+        if (file_exists('view/' . $name. ".php") === false){
+            return;
+        }
         ob_start();
         include "view/$name.php";
         $this->content = ob_get_contents();
@@ -313,17 +333,30 @@ class Template
 
 class Auth
 {
+    private static $started = false;
+
     static public function isLogin(){
         return isset($_SESSION['user']);
     }
 
-    static public function request(){
-
-        if (isset($_COOKIE[session_name()])){
+    static public function autostart(){
+        if (isset($_COOKIE[session_name()]) && empty($_SESSION['user']) && self::$started === false){
+            self::$started = true;
             session_start();
         }
+    }
 
-        if (empty($_SESSION['user']) && isset($_POST['auth'])){
+    static public function start(){
+        if (empty($_SESSION['user']) && self::$started === false){
+            session_start();
+        }
+    }
+
+    static public function login(){
+
+        self::autostart(); 
+
+        if (empty($_SESSION['user']) && self::isLogin() === false && isset($_POST['name'])){
             $users = include 'etc/users.php';
             $username = $_POST['name'];
             if (isset($users[$username]) && $users[$username] === $_POST['pwd']){
@@ -332,7 +365,16 @@ class Auth
                 }
                 $_SESSION['user'] = $username;
             }
+            if ($_REQUEST['action'] === 'auth'){
+                header("Location: /",TRUE,302);
+                exit();
+            }
         }
+    }
+
+    static public function request(){
+
+        self::login();
 
         if (empty($_SESSION['user'])){
             throw new AuthException();
@@ -341,7 +383,7 @@ class Auth
 
     static public function logout(){
         session_destroy();
-        header("Location: /monitor.php",TRUE,307);
+        header("Location: /",TRUE,307);
         exit();
     }
 }

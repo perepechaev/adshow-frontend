@@ -4,7 +4,7 @@
 
 <head>
 
-<title>Monitor</title>
+<title>Рекламная компания ООО РОССТС</title>
 
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="author" content="Erwin Aligam - styleshout.com" />
@@ -13,7 +13,7 @@
 <meta name="robots" content="index, follow, noarchive" />
 <meta name="googlebot" content="noarchive" />
 
-<link rel="stylesheet" type="text/css" media="screen" href="view/css/screen.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
 
 </head>
 <body>
@@ -21,25 +21,34 @@
     <!-- header starts-->
     <div id="header-wrap"><div id="header" class="container_16">
 
-        <h1 id="logo-text"><a href="index.html" title="">AdShow</a></h1>
-        <p id="intro">Мониторинг устройств</p>
+        <h1 id="logo-text"><a href="index.html" title="">Росстс</a></h1>
+        <p id="intro">Компания &ldquo;ООО РОССТС&rdquo;</p>
 
         <!-- navigation -->
         <div  id="nav">
             <ul>
-                <li id="current"><a href="monitor.php">Monitor</a></li>
+                <li id="current"><a href="/">На главную</a></li>
+                <li><a href="/?action=offer">Договор оферты</a></li>
+                <li><a href="/?action=prices">Цены</a></li>
+                <li><a href="/?action=about">О нас</a></li>
             </ul>
         </div>
 
         <div id="header-image"></div>
 
-        <form id="quick-search" action="index.html" method="get" >
+        <div class="profile">
+        <?php if (Auth::isLogin() === false): ?>
             <p>
-            <label for="qsearch">Поиск:</label>
-            <input class="tbox" id="qsearch" type="text" name="qsearch" value="Поиск..." title="" />
-            <input class="btn" alt="Search" type="image" name="searchsubmit" title="Search" src="view/images/search.gif" />
+                <a href="/?action=auth" class="tbox">Личный кабинет</a>
             </p>
-        </form>
+        <?php else: ?>
+            <p>
+                <a href="#" class="tbox">Личный кабинет</a>
+                |
+                <a href="/?action=logout" class="tbox">Выход</a>
+            </p>
+        <?php endif; ?>
+        </div>
 
     <!-- header ends here -->
     </div></div>
@@ -59,17 +68,10 @@
         <div id="left-columns" class="grid_4">
 
             <div class="grid_4 alpha">
-
-                <?php if (Auth::isLogin()):?>
                 <div class="sidemenu">
-                    <h3>Меню</h3>
-                    <ul>
-                        <li><a href="monitor.php">Магазины</a></li>
-                        <li><a href="monitor.php?action=devices">Устройства</a></li>
-                        <li><a href="monitor.php?action=logout">Выход</a></li>
-                    </ul>
+                    <a href="/?action=order"><img src="/images/order.png" /></a>
+                    <a href="#" class="promotions">&nbsp;</a>
                 </div>
-                <?php endif; ?>
             </div>
 
 

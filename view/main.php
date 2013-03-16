@@ -1,20 +1,15 @@
-<h2>Установленные точки</h2>
-<?php foreach (Shop::listAll() as $shop):?>
-    <?php /* @var $shop Shop */?>
-        <?php foreach ($shop->listPoints() as $point):?>
-            <h3><?php echo htmlspecialchars($shop->name) ?>/<?php echo htmlspecialchars($point->name) ?></h3>
-            <?php /* @var $point Point */ ?>
-            <p>
-                <?php foreach ($point->listImages() as $image): ?>
-                    <img height="80" src="<?= $image['thumb']?>"/>
-                <?php endforeach; ?>
-            </p>
-            <p class="postmeta">
-                <?php if ($devs = $point->listDevices()):?>
-                    Устройства: <?php echo htmlspecialchars(implode(', ', $point->getDevicesName()))?>
-                <?php else: ?>
-                    <i>нет активности</i>
-                <?php endif;?>
-            </p>
-        <?php endforeach;?>
-<?php endforeach;?>
+<h3>О проекте</h3>
+<p>
+    <img width="120px" src="/images/example.png" class="float-left"/>
+    Наш проект позволит  разместить Вашу рекламу с максимальным эффектом, наши рекламные площади будут работать на Вас! Мы работаем на Ваш успех!
+</p>
+<br style="clear: both" />
+<h3>Для этого мы предлагаем вам</h3>
+<ul>
+    <li>Самые посещаемые места в городе сети магазинов шаговой доступности (Вашу рекламу увидят сотни тысяч людей );</li>
+    <li>Инновационный подход к подаче рекламы (необычные места размещения и форма подачи рекламных роликов делают ее интересной);</li> 
+    <li>мы охватываем самые широкие массы населения;</li>
+    <li>Оптимальная цена на размещение вашего ролика;</li>
+    <li>Огромное преимущество перед печатными изданиями ( тираж одного рекламного места 1400 показов в сутки)</li>
+    <li>Мы гарантируем индивидуальный подход к каждому клиенту!</li>
+</ul>

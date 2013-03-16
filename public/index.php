@@ -11,31 +11,36 @@ function my_assert_handler($file, $line, $code, $msg = '')
 }
 function my_error_handler($errno, $errstr, $errfile, $errline)
 {
-    throw new Exception("<h3>$errstr</h3>$errfile:$errline", (int) $code);
+    throw new Exception("<h3>$errstr</h3>$errfile:$errline", (int) $errno);
 }
 // Set up the callback
 assert_options(ASSERT_CALLBACK, 'my_assert_handler');
 set_error_handler("my_error_handler", E_ALL | E_STRICT);
 
 
+ob_start();
+
 try {
     date_default_timezone_set('Europe/Moscow');
 
-    ob_start();
+    chdir('..');
 
     require_once 'lib/core.php';
 
-    Auth::request();
+    Auth::autostart();
+    Auth::login();
 
     $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'main';
+
     if ($action === 'logout'){
         Auth::logout();
     }
 
-    $template = new Template($action);
+    $action = new Action($action);
+
+    $template = $action->run();
     include "view/layout.php";
 
-    ob_end_flush();
 }
 catch (AuthException $e){
     $template = new Template('auth');
@@ -46,3 +51,5 @@ catch (Exception $e){
     echo "{$e->getMessage()}";
     echo "<pre>" . $e->getTraceAsString() . "</pre>";
 }
+
+ob_end_flush();
