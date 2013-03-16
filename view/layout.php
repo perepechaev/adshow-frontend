@@ -87,14 +87,14 @@
         <div id="footer-bottom">
 
             <p class="bottom-left">
-            &nbsp; &copy;2011 All your copyright info here &nbsp; &nbsp;
-            Design by <a href="http://www.styleshout.com/">styleshout</a>
+            &nbsp; &copy;2011 Информация о авторском праве &nbsp; &nbsp;
+            Дизайн <a href="http://www.box-root.ru/">atomfil</a>
             </p>
 
             <p class="bottom-right" >
-                <a href="index.html">Home</a> |
-                <a href="index.html">Sitemap</a> |
-                <a href="index.html">RSS Feed</a> |
+                <a href="index.html">Главная</a> |
+                <a href="index.html">Карта сайта</a> |
+                <a href="index.html">RSS </a> |
                 <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> |
                    <a href="http://validator.w3.org/check/referer">XHTML</a>
             </p>

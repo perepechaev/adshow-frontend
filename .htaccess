@@ -1,0 +1,11 @@
+AddDefaultCharset utf-8
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^.htaccess$ - [F]
+
+
+RewriteRule  ^$ public/    [L]
+RewriteRule  ^(css|images|img).*$ public/%{REQUEST_URI} [L]
+
