@@ -28,9 +28,9 @@
         <div  id="nav">
             <ul>
                 <li id="current"><a href="/">На главную</a></li>
-                <li><a href="/?action=offer">Договор оферты</a></li>
-                <li><a href="/?action=prices">Цены</a></li>
-                <li><a href="/?action=about">О нас</a></li>
+                <li><a href="/offer.html">Договор оферты</a></li>
+                <li><a href="/prices.html">Цены</a></li>
+                <li><a href="/about.html">О нас</a></li>
             </ul>
         </div>
 
@@ -39,13 +39,13 @@
         <div class="profile">
         <?php if (Auth::isLogin() === false): ?>
             <p>
-                <a href="/?action=auth" class="tbox">Личный кабинет</a>
+                <a href="/auth.html" class="tbox">Личный кабинет</a>
             </p>
         <?php else: ?>
             <p>
                 <a href="#" class="tbox">Личный кабинет</a>
                 |
-                <a href="/?action=logout" class="tbox">Выход</a>
+                <a href="/logout.html" class="tbox">Выход</a>
             </p>
         <?php endif; ?>
         </div>
@@ -69,7 +69,7 @@
 
             <div class="grid_4 alpha">
                 <div class="sidemenu">
-                    <a href="/?action=order"><img src="/images/order.png" /></a>
+                    <a href="/order.html"><img src="/images/order.png" /></a>
                     <a href="#" class="promotions">&nbsp;</a>
                 </div>
             </div>
