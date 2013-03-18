@@ -501,6 +501,12 @@ class Auth
         }
     }
 
+    static public function requestAdmin(){
+        if (Auth::isAdmin() === false){
+            throw new AuthException('Forbidden', 403);
+        }
+    }
+
     static public function logout(){
         session_destroy();
         header("Location: /",TRUE,307);

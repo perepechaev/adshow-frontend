@@ -606,3 +606,11 @@ div.error {
     font-size: 12px;
     color: red;
 }
+
+a.edit{
+    width: 24px;
+    height: 24px;
+    display: block;
+    background: url(/img/edit.png) no-repeat;
+    float: left;
+}

@@ -45,6 +45,9 @@ try {
 }
 catch (AuthException $e){
     ob_clean();
+    if ($e->getCode()){
+        header('HTTP/1.0 ' . $e->getCode() . " " . $e->getMessage());
+    }
     $template = new Template('auth');
     include "view/layout.php";
 }
