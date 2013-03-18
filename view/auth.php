@@ -7,4 +7,5 @@
     <input type="password" id="pwd" name="pwd" value="" /><br />
 
     <input type="submit" name="auth" value="Вход" />
+    <a href="/auth/signup.html">Регистрация</a>
 </form>

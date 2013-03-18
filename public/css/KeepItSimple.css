@@ -161,6 +161,9 @@ input:focus, select:focus, textarea:focus {
 #name, #email, #message, #website {
 	width: 380px;
 }
+#signup input[type=text], #signup input[type=password]{
+	width: 380px;
+}
 #header #name, #header #pwd {
     width: 140px;
     display: inline;

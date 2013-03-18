@@ -26,6 +26,7 @@ try {
     chdir('..');
 
     require_once 'lib/core.php';
+    require_once 'lib/dump.php';
 
     Auth::autostart();
     Auth::login();
@@ -45,6 +46,9 @@ try {
 catch (AuthException $e){
     $template = new Template('auth');
     include "view/layout.php";
+}
+catch (RedirectException $e){
+    $e->run();
 }
 catch (Exception $e){
     echo "<h1>Runtime error</h1>";

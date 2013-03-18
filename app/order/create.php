@@ -7,5 +7,5 @@ $_SESSION['flash'] = "Спасибо, с Вами свяжется наш мен
 
 mail("perepechaev@inbox.ru", "Order from " . $_SERVER['HTTP_HOST'], implode("\n", $_POST));
 
-header('Location: /?action=order/success', true, 302);
+header('Location: /order/success', true, 302);
 exit;

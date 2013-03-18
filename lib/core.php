@@ -98,12 +98,31 @@ class DB
 class App
 {
     static private $db;
+    static private $map;
 
     static public function db(){
         if (self::$db === null){
             self::$db = new DB();
         }
         return self::$db;
+    }
+
+    static public function map(){
+        if (self::$map === null){
+            self::$map = new DataMap();
+        }
+        return self::$map;
+    }
+}
+
+class DataMap
+{
+    public function user(){
+        static $user;
+        if (empty($user)){
+            $user = new UserMap('User');
+        }
+        return $user;
     }
 }
 
@@ -155,6 +174,52 @@ class Manage
             'point' => $res[0]['point_id']
         ));
     }
+}
+
+class DataMapper
+{
+    public function save(){
+        $data = (array) $this; 
+        $this->id = App::db()->insert(get_class($this), $data);
+    }
+}
+
+class DBMap
+{
+    protected $data;
+    private $table;
+
+    public function __construct($map){
+        $this->data = $map;
+        $this->table = strtolower($map);
+    }
+
+    public function listAll(){
+        $sql = 'SELECT * FROM ' . $this->table;
+        return App::db()->fetchObjects($this->data, $sql);
+    }
+}
+
+class UserMap extends DBMap
+{
+    public function find($name, $email, $phone){
+        $sql = 'SELECT * FROM user WHERE name = :name OR email = :email OR phone = :phone';
+
+        $stmt = App::db()->prepare($sql, array(
+            ':name' => $name, 
+            ':email' => $email,
+            ':phone' => $phone
+        ));
+        return $stmt->fetchObject($this->data);
+    }
+}
+
+class User extends DataMapper
+{
+    public $id;
+    public $name;
+    public $password;
+    public $phone;
 }
 
 class Shop
@@ -295,6 +360,27 @@ class Image
     }
 }
 
+class Flash
+{
+    static public function add($msg){
+        Auth::start();
+
+        if (empty($_SESSION['flash'])){
+            $_SESSION['flash'] = array();
+        }
+
+        $_SESSION['flash'][] = $msg;
+    }
+
+    static public function get(){
+        if (Auth::isStarted() === false){
+            return array();
+        } 
+
+        return isset($_SESSION['flash']) ? $_SESSION['flash'] : array();
+    }
+}
+
 class Action
 {
     private $name;
@@ -304,7 +390,7 @@ class Action
     }
 
     public function run(){
-        $result = 0;
+        $result = array();
         if (file_exists('app/' . $this->name. ".php")){
             $result = include 'app/' . $this->name. ".php";
         }
@@ -315,13 +401,14 @@ class Action
 class Template
 {
     private $content = '';
-    public function __construct($name, $data = array()){
-        $name = preg_replace('/[^\d\w\/]/', '', $name);
-        if (file_exists('view/' . $name. ".php") === false){
+    public function __construct($template_name, $data = array()){
+        $template_name = preg_replace('/[^\d\w\/]/', '', $template_name);
+        if (file_exists('view/' . $template_name. ".php") === false){
             return;
         }
         ob_start();
-        include "view/$name.php";
+        extract($data);
+        include "view/$template_name.php";
         $this->content = ob_get_contents();
         ob_end_clean();
     }
@@ -348,8 +435,13 @@ class Auth
 
     static public function start(){
         if (empty($_SESSION['user']) && self::$started === false){
+            self::$started = true;
             session_start();
         }
+    }
+
+    static public function isStarted(){
+        return self::$started;
     }
 
     static public function login(){
@@ -372,6 +464,16 @@ class Auth
         }
     }
 
+    static public function authorize(User $user){
+        self::start();
+        $_SESSION['user'] = $user->name;
+        $_SESSION['userdata'] = $user;
+    }
+
+    static public function getUser(){
+        return $_SESSION['userdata'];
+    }
+
     static public function request(){
 
         self::login();
@@ -391,4 +493,15 @@ class Auth
 class AuthException extends Exception
 {
 
+}
+
+class RedirectException extends Exception
+{
+    public function run(){
+        header('Location: ' . $this->getMessage(), true, 302);
+    }
+}
+
+function redirect($address){
+    throw new RedirectException($address);
 }
