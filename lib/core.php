@@ -212,6 +212,15 @@ class UserMap extends DBMap
         ));
         return $stmt->fetchObject($this->data);
     }
+
+    public function getByName($name){
+        $sql = 'SELECT * FROM user WHERE name = :name OR email = :name LIMIT 1';
+
+        $stmt = App::db()->prepare($sql, array(
+            ':name' => $name,
+        ));
+        return $stmt->fetchObject($this->data);
+    }
 }
 
 class User extends DataMapper
@@ -426,6 +435,10 @@ class Auth
         return isset($_SESSION['user']);
     }
 
+    static public function isAdmin(){
+        return isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'];
+    }
+
     static public function autostart(){
         if (isset($_COOKIE[session_name()]) && empty($_SESSION['user']) && self::$started === false){
             self::$started = true;
@@ -456,10 +469,12 @@ class Auth
                     session_start();
                 }
                 $_SESSION['user'] = $username;
-            }
-            if ($_REQUEST['action'] === 'auth'){
-                header("Location: /",TRUE,302);
-                exit();
+                $_SESSION['isAdmin'] = true;
+                $_SESSION['userdata'] = new User();
+                if ($_REQUEST['action'] === 'auth'){
+                    header("Location: /",TRUE,302);
+                    exit();
+                }
             }
         }
     }
@@ -471,6 +486,9 @@ class Auth
     }
 
     static public function getUser(){
+        if (self::isLogin() === false){
+            throw new AuthException();
+        }
         return $_SESSION['userdata'];
     }
 

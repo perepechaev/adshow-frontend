@@ -1,5 +1,10 @@
 <h2>Авторизация</h2>
 <form method="post" action="">
+    <?php if (empty($error) === false): ?>
+    <div class="error">
+        <?= implode("<br />", $error) ?>
+    </div>
+    <?php endif; ?>
     <label for="name">Имя пользователя:</label><br />
     <input type="text" id="name" name="name" value="" /><br />
 

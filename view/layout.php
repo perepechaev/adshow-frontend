@@ -43,7 +43,11 @@
             </p>
         <?php else: ?>
             <p>
-                <a href="#" class="tbox">Личный кабинет</a>
+                <?php if (Auth::isAdmin()): ?>
+                <a href="/manage/index.html" class="tbox">Адмиистрирование</a>
+                |
+                <?php endif; ?>
+                <a href="/profile.html" class="tbox">Личный кабинет</a>
                 |
                 <a href="/logout.html" class="tbox">Выход</a>
             </p>

@@ -44,6 +44,7 @@ try {
 
 }
 catch (AuthException $e){
+    ob_clean();
     $template = new Template('auth');
     include "view/layout.php";
 }
