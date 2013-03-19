@@ -15,7 +15,7 @@ body {
 	color: #666666; 	
 	margin: 0; padding: 0 0 50px 0; 
 	background: #F6F5F5 url(../img/bg.gif) repeat-x; 
-	text-align: center;
+/*	text-align: center; */
 }
 /* Links */
 a:link, a:visited { 
