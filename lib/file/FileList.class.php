@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/FileListCache.class.php');
+require_once(dirname(__FILE__) . '/FileListCache.class.php');
 
 class FileList implements IteratorAggregate
 {

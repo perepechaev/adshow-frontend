@@ -35,10 +35,9 @@ $thumbnail->output($file, 'data/banners/' . $user->id . '/thumb/' . $file->getFi
             'valign'  => THUMBNAIL_ALIGN_CENTER,
 */
 
-        header('Content-type: image/png');
-echo file_get_contents('data/banners/8/thumb/' . $file->getFileName());
+header('Content-type: image/png');
+echo file_get_contents('data/banners/' . $user->id . '/' . $file->getFileName());
+//echo file_get_contents('data/banners/' . $user->id . '/thumb/' . $file->getFileName());
 die;
-
-dd('sss');
 
 return array();

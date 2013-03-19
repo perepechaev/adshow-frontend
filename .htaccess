@@ -7,5 +7,5 @@ RewriteRule ^.htaccess$ - [F]
 
 
 RewriteRule  ^$ public/    [L]
-RewriteRule  ^(css|images|img).*$ public/%{REQUEST_URI} [L]
+RewriteRule  ^. public/%{REQUEST_URI} [L]
 

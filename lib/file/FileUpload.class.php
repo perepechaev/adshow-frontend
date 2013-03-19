@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/File.class.php');
-require_once(__DIR__ . '/FileUploadException.class.php');
+require_once(dirname(__FILE__). '/File.class.php');
+require_once(dirname(__FILE__). '/FileUploadException.class.php');
 
 /**
  * Файл загрузки файлов на сервер

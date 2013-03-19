@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/FileListCacheException.class.php');
+require_once(dirname(__FILE__). '/FileListCacheException.class.php');
 
 class FileListCache
 {
